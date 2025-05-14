@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Product>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "My Products";
+}
+
+<h2 class="mb-4">My Products</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var product in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@product.ProductName</h5>
+                    <p class="card-text">Category: @product.Category</p>
+                    <p class="card-text">Date: @product.ProductionDate.ToShortDateString()</p>
+                    <p class="card-text">Qty: @product.Quantity</p>
+                    <p class="card-text">Price: R @product.Price</p>
+                    <p class="card-text">Farmer: @product.Farmer?.FirstName @product.Farmer?.LastName</p>
+                    
+
+                </div>
+            </div>
+        </div>
+    }
+</div>

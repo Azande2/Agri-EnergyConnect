@@ -1,0 +1,99 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - AgriEnergy Connect</title>
+
+    <!-- ✅ Favicon -->
+    <link rel="icon" type="image/png" href="~/images/favicon.png" />
+    <link rel="shortcut icon" href="~/images/favicon.png" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="~/images/favicon.png" />
+
+    <!-- Bootstrap & Site CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <style>
+        body {
+            background: linear-gradient(to right, #eafbea, #ffffff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .sidebar {
+            background: linear-gradient(to bottom, #c6ab2c, #6dbf64);
+            color: black;
+        }
+
+            .sidebar .nav-link {
+                font-weight: 500;
+                color: black !important;
+            }
+
+                .sidebar .nav-link:hover {
+                    text-decoration: underline;
+                    background-color: rgba(255, 255, 255, 0.2);
+                    border-radius: 5px;
+                }
+
+        .content {
+            background: linear-gradient(to top, #f9fff9, #e0ffe0);
+            border-top-left-radius: 20px;
+            padding: 2rem;
+            min-height: 100vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <!-- Sidebar -->
+            <div class="sidebar bg-gradient" style="width: 230px; min-height: 100vh;">
+                <div class="p-3 text-center">
+                    <img src="~/images/logo.png" alt="Logo" class="img-fluid" style="max-width: 100px;">
+                    <h5 class="mt-2">AGRIENERGY<br /><small>CONNECT</small></h5>
+                </div>
+                <ul class="nav flex-column px-3">
+                    <li class="nav-item mb-2"><a class="nav-link" href="/">🏠 Home</a></li>
+                    <li class="nav-item mb-2"><a class="nav-link" href="/Home/AboutUs">ℹ️ About us</a></li>
+
+                    @if (User.IsInRole("Employee"))
+                    {
+                        <li class="nav-item mb-2"><a class="nav-link" href="/Employee/FarmerList">👥 Our Suppliers</a></li>
+                        <li class="nav-item mb-2"><a class="nav-link" href="/Employee/AddFarmer">🧑‍🌾 Add Farmer</a></li>
+                        <li class="nav-item mb-2"><a class="nav-link" href="/Employee/Market">🛒 Market</a></li>
+                        <li class="nav-item mb-2"><a class="nav-link" href="/Farmer/FarmerProducts">📦 All products</a></li> <!-- ✅ Shared View Access -->
+                    }
+
+                    @if (User.IsInRole("Farmer"))
+                    {
+                        <li class="nav-item mb-2"><a class="nav-link" href="/Farmer/AddProduct">➕ Add Product</a></li>
+                        <li class="nav-item mb-2"><a class="nav-link" href="/Farmer/FarmerProducts">📦 My Products</a></li>
+                    }
+
+                    <li class="nav-item mt-2"><hr /></li>
+
+                    <li class="nav-item mb-2">
+                        <form method="post" asp-area="Identity" asp-page="/Account/Logout" class="d-inline">
+                            <button type="submit" class="btn btn-link nav-link p-0">🚪 Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        }
+
+        <!-- Main Content -->
+        <div class="content">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

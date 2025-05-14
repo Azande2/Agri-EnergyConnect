@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Farmer>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Our Farmers";
+}
+
+<h2 class="mb-3">Our Farmers</h2>
+<table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var farmer in Model)
+        {
+            <tr>
+                <td>@farmer.FirstName @farmer.LastName</td>
+                <td>@farmer.Email</td>
+                <td>@farmer.PhoneNumber</td>
+                <td>@farmer.Address</td>
+                <td>@farmer.Role</td>
+            </tr>
+        }
+    </tbody>
+</table>

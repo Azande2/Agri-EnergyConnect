@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center p-5" style="background: linear-gradient(to right, #e9f5e9, #d0f0c0); border-radius: 10px;">
+    <h1 class="display-5 fw-bold text-success">Transforming South Africa with Collaboration</h1>
+    <p class="lead mt-3" style="color: #333;">
+        AgriEnergy Connect is more than a platform — it's a movement empowering local farmers and employees
+        through digital tools. Explore products, manage profiles, and contribute to a greener future.
+    </p>
+    <hr class="my-4" style="border-color: #6dbf64;" />
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="alert alert-light mt-4 shadow-sm">
+            <h4 class="mb-3">Ready to grow with us?</h4>
+            <p class="mb-4">Login or Register to start adding your products and managing farm profiles.</p>
+            <a class="btn btn-success me-2" href="/Identity/Account/Login">🌿 Login</a>
+            <a class="btn btn-primary" href="/Identity/Account/Register">🌱 Register</a>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success mt-4">
+            Welcome back, @User.Identity.Name!
+        </div>
+    }
+</div>
