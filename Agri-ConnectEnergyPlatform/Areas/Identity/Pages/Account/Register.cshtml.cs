@@ -1,5 +1,4 @@
-﻿// Register.cshtml.cs
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -39,9 +38,6 @@ public class RegisterModel : PageModel
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        [Required]
-        public string UserRole { get; set; }
     }
 
     public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -55,12 +51,16 @@ public class RegisterModel : PageModel
 
             if (result.Succeeded)
             {
+                // Ensure the "Farmer" role exists
                 if (!await _roleManager.RoleExistsAsync("Farmer"))
+                {
                     await _roleManager.CreateAsync(new IdentityRole("Farmer"));
-                if (!await _roleManager.RoleExistsAsync("Employee"))
-                    await _roleManager.CreateAsync(new IdentityRole("Employee"));
+                }
 
-                await _userManager.AddToRoleAsync(user, Input.UserRole);
+                // Assign Farmer role
+                await _userManager.AddToRoleAsync(user, "Farmer");
+
+                // Log them in
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return LocalRedirect(returnUrl);
             }
